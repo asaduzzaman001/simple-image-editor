@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Editor</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="root.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <nav>
+        <div class="logo"></div>
+        <div class="items"></div>
+      </nav>
+      <section class="editor-container">
+        <div class="image-area">
+          <div class="placeholder" id="placeholder">
+            <i class="ri-image-add-line"></i>
+            <p style="margin-left: -10px">Click to add an image</p>
+            <input type="file" name="image" id="image-input" accept="image/*" />
+          </div>
+          <canvas id="image-canvas" class="" width="200" height="200"></canvas>
+        </div>
+        <div class="tools-panel" id="tools-container">
+          
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{
+  "filters": [
+    {
+      "name": "brightness",
+      "unit": "%",
+      "min": 0,
+      "max": 200,
+      "value": 100
+    },
+    {
+      "name": "contrast",
+      "unit": "%",
+      "min": 0,
+      "max": 200,
+      "value": 100
+    },
+    {
+      "name": "saturate",
+      "unit": "%",
+      "min": 0,
+      "max": 200,
+      "value": 100
+    },
+    {
+      "name": "grayscale",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "value": 0
+    },
+    {
+      "name": "hue-rotate",
+      "unit": "deg",
+      "min": 0,
+      "max": 360,
+      "value": 0
+    },
+    {
+      "name": "invert",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "value": 0
+    },
+
+    {
+      "name": "sepia",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "value": 0
+    },
+    {
+      "name": "blur",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "value": 0
+    },
+    {
+      "name": "opacity",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "value": 100
+    }
+  ]
+}

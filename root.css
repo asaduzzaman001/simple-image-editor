@@ -1,0 +1,75 @@
+:root {
+  /* -----------------------------------
+    COLOR SYSTEM
+  ----------------------------------- */
+  --color-primary: #334eac;
+  --color-primary-light: #7096d1;
+  --color-primary-dark: #081f5c;
+
+  --color-secondary: #e7f1ff;
+  --color-secondary-light: #f9fcff;
+  --color-secondary-dark: #d0e3ff;
+
+  --color-bg: #131313;
+  --color-bg-alt: #363636b2;
+
+  --color-text: #eeecec;
+  --color-text-light: #64748b;
+  --color-border: #e2e8f0;
+
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* -----------------------------------
+    SPACING SYSTEM (8pt scale)
+  ----------------------------------- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 48px;
+  --space-11: 96px;
+  --space-12: 192px;
+
+  /* -----------------------------------
+    RESPONSIVE FLUID SPACING
+    auto scales between mobile-to-desktop
+  ----------------------------------- */
+  --space-fluid-sm: clamp(4px, 1vw, 12px);
+  --space-fluid-md: clamp(8px, 2vw, 24px);
+  --space-fluid-lg: clamp(16px, 4vw, 48px);
+  --space-fluid-xl: clamp(32px, 8vw, 96px);
+
+  /* -----------------------------------
+    TYPOGRAPHY
+  ----------------------------------- */
+  --font-base: 16px;
+  --font-sm: clamp(0.8rem, 1vw, 0.9rem);
+  --font-md: clamp(1rem, 2vw, 1.1rem);
+  --font-lg: clamp(1.25rem, 3vw, 1.4rem);
+  --font-xl: clamp(1.5rem, 4vw, 1.8rem);
+  --font-xxl: clamp(2rem, 5vw, 2.4rem);
+
+  /* -----------------------------------
+    RADIUS
+  ----------------------------------- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* -----------------------------------
+    SHADOW
+  ----------------------------------- */
+  --shadow-sm: 0 1px 3px rgba(173, 173, 173, 0.1);
+  --shadow-md: 0 4px 8px rgba(202, 202, 202, 0.12);
+  --shadow-lg: 0 10px 20px rgba(212, 212, 212, 0.15);
+}
