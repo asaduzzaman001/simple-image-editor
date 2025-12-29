@@ -45,15 +45,17 @@ function loadFilters(data) {
   });
   const ranges = document.querySelectorAll(".range");
   const inputs = document.querySelectorAll(".number-input");
-  controlValues(ranges);
-  controlValues(inputs);
+  controlValues(ranges, data);
+  controlValues(inputs, data);
 }
 
-function controlValues(items) {
+function controlValues(items, data) {
+  let value;
+  let name;
   items.forEach((item) => {
     item.addEventListener("input", (e) => {
-      const value = e.target.value;
-      const name = e.target.name;
+      value = e.target.value;
+      name = e.target.name;
       let input;
       if (e.target.type === "range") {
         input = document.getElementById(`${name}-number`);
@@ -61,27 +63,38 @@ function controlValues(items) {
         input = document.getElementById(`${name}`);
       }
       input.value = value;
+
+      imageControler(data, value, name);
     });
   });
 }
 
-function imageControler() {
+function imageControler(data, value, name) {
   const imageInput = document.getElementById("image-input");
+  const cancelBtn = document.getElementById("cancel");
+  const placeholder = document.getElementById("placeholder");
+  const canvas = document.getElementById("image-canvas");
+  const ctx = canvas.getContext("2d");
 
   imageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const canvas = document.getElementById("image-canvas");
-    const ctx = canvas.getContext("2d");
-
     const image = new Image();
     image.src = URL.createObjectURL(file);
 
     image.onload = () => {
-      document.getElementById("placeholder").classList.add("vanish");
+      placeholder.classList.add("vanish");
       canvas.classList.remove("vanish");
+      cancelBtn.classList.remove("vanish");
 
+      cancelBtn.onclick = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.classList.add("vanish");
+        placeholder.classList.remove("vanish");
+        cancelBtn.classList.add("vanish");
+        imageInput.value = "";
+      };
       // 🔹 Screen / container width (mobile friendly)
       const maxWidth = window.innerWidth * 0.95;
       const maxHeight = window.innerHeight * 0.7;
@@ -112,8 +125,15 @@ function imageControler() {
       ctx.drawImage(image, 0, 0, newWidth, newHeight);
     };
   });
+  applyFilters(ctx, data, value, name);
 }
 
-imageControler();
+function applyFilters(ctx, data, value, name) {
+  let filterString = "";
+  filterString += `${name}(${value}${
+    data.filters.find((f) => f.name === name).unit
+  }) `;
+  ctx.filter = filterString;
+}
 
 loadData();
