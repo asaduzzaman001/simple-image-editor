@@ -35,6 +35,11 @@ nav {
 
 .image-area {
   min-width: 65%;
+  max-width: 50%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: auto;
 }
 
 .tools-panel,
@@ -170,4 +175,27 @@ nav {
 }
 .vanish {
   display: none;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  max-height: 750px;
+  border-radius: var(--radius-md);
+  padding: 5%;
+}
+
+#cancel {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+  font-size: var(--font-xl);
+  color: var(--color-danger);
+  cursor: pointer;
+  opacity: 0.8;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+#cancel:hover {
+  opacity: 1;
 }

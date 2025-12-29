@@ -11,8 +11,6 @@ async function loadData() {
 
 function loadFilters(data) {
   const toolsContainer = document.getElementById("tools-container");
-  const ranges = document.querySelectorAll(".range");
-  const inputs = document.querySelectorAll(".number-input");
 
   data.filters.forEach((filter) => {
     const tool = document.createElement("div");
@@ -45,7 +43,8 @@ function loadFilters(data) {
     `;
     toolsContainer.appendChild(tool);
   });
-
+  const ranges = document.querySelectorAll(".range");
+  const inputs = document.querySelectorAll(".number-input");
   controlValues(ranges);
   controlValues(inputs);
 }
@@ -68,22 +67,53 @@ function controlValues(items) {
 
 function imageControler() {
   const imageInput = document.getElementById("image-input");
+
   imageInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
-    // if (file) {
-    //   document.getElementById("placeholder").classList.add("vanish");
-    // }
+    if (!file) return;
+
     const canvas = document.getElementById("image-canvas");
     const ctx = canvas.getContext("2d");
-    const image = new Image();
-    image.onload = () => {
-      imagePreview.src = URL.createObjectURL(file);
-    };
 
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    console.log(canvas);
+    const image = new Image();
+    image.src = URL.createObjectURL(file);
+
+    image.onload = () => {
+      document.getElementById("placeholder").classList.add("vanish");
+      canvas.classList.remove("vanish");
+
+      // 🔹 Screen / container width (mobile friendly)
+      const maxWidth = window.innerWidth * 0.95;
+      const maxHeight = window.innerHeight * 0.7;
+
+      // 🔹 Original ratio
+      let ratio = image.width / image.height;
+
+      let newWidth = image.width;
+      let newHeight = image.height;
+
+      // 🔹 Resize logic (ratio বজায় রেখে)
+      if (newWidth > maxWidth) {
+        newWidth = maxWidth;
+        newHeight = newWidth / ratio;
+      }
+
+      if (newHeight > maxHeight) {
+        newHeight = maxHeight;
+        newWidth = newHeight * ratio;
+      }
+
+      // 🔹 Canvas resize
+      canvas.width = newWidth;
+      canvas.height = newHeight;
+
+      // 🔹 Clear & draw
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, newWidth, newHeight);
+    };
   });
 }
+
 imageControler();
 
 loadData();
