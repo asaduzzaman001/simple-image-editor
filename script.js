@@ -1,7 +1,13 @@
 let data;
 let currentImage;
+const imageInput = document.getElementById("image-input");
+const btnImageInput = document.getElementById("btn-image-input");
+const cancelBtn = document.getElementById("cancel");
+const placeholder = document.getElementById("placeholder");
 const canvas = document.getElementById("image-canvas");
 const ctx = canvas.getContext("2d");
+const resetBtn = document.getElementById("reset-btn");
+const downloadBtn = document.getElementById("download-btn");
 
 async function loadData() {
   try {
@@ -55,6 +61,15 @@ function loadFilters() {
   controlValues(inputs);
 }
 
+function resetFilters(items) {
+  items.forEach((item) => {
+    const defaultValue = data.filters.find(
+      (filter) => filter.name === item.name
+    ).value;
+    item.value = defaultValue;
+  });
+  applyFilters(items);
+}
 function controlValues(items) {
   items.forEach((item) => {
     item.oninput = (e) => {
@@ -72,11 +87,54 @@ function controlValues(items) {
   });
 }
 
-function imageControler() {
-  const imageInput = document.getElementById("image-input");
-  const cancelBtn = document.getElementById("cancel");
-  const placeholder = document.getElementById("placeholder");
+function chooseImage(e) {
+  let file = e.target.files[0];
+  if (!file) return;
+  const inputs = document.querySelectorAll(".number-input");
+  const ranges = document.querySelectorAll(".range");
+  resetFilters(ranges);
+  resetFilters(inputs);
 
+  const image = new Image();
+  image.src = URL.createObjectURL(file);
+
+  image.onload = () => {
+    currentImage = image;
+    placeholder.classList.add("vanish");
+    canvas.classList.remove("vanish");
+    cancelBtn.classList.remove("vanish");
+
+    // 🔹 Screen / container width (mobile friendly)
+    const maxWidth = window.innerWidth * 0.95;
+    const maxHeight = window.innerHeight * 0.7;
+
+    // 🔹 Original ratio
+    let ratio = image.width / image.height;
+
+    let newWidth = image.width;
+    let newHeight = image.height;
+
+    // 🔹 Resize logic (ratio বজায় রেখে)
+    if (newWidth > maxWidth) {
+      newWidth = maxWidth;
+      newHeight = newWidth / ratio;
+    }
+
+    if (newHeight > maxHeight) {
+      newHeight = maxHeight;
+      newWidth = newHeight * ratio;
+    }
+
+    // 🔹 Canvas resize
+    canvas.width = newWidth;
+    canvas.height = newHeight;
+
+    // 🔹 Clear & draw
+    drawImage();
+  };
+}
+
+function imageControler() {
   cancelBtn.onclick = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     canvas.classList.add("vanish");
@@ -84,48 +142,54 @@ function imageControler() {
     cancelBtn.classList.add("vanish");
     imageInput.value = "";
     currentImage = null;
+
+    // Reset filters
+    const inputs = document.querySelectorAll(".number-input");
+    const ranges = document.querySelectorAll(".range");
+    resetFilters(ranges);
+    resetFilters(inputs);
   };
 
-  imageInput.onchange = (e) => {
-    let file = e.target.files[0];
-    if (!file) return;
-    const image = new Image();
-    image.src = URL.createObjectURL(file);
+  imageInput.onchange = chooseImage;
+  btnImageInput.onchange = chooseImage;
 
-    image.onload = () => {
-      currentImage = image;
-      placeholder.classList.add("vanish");
-      canvas.classList.remove("vanish");
-      cancelBtn.classList.remove("vanish");
+  resetBtn.onclick = () => {
+    const inputs = document.querySelectorAll(".number-input");
+    const ranges = document.querySelectorAll(".range");
+    resetFilters(ranges);
+    resetFilters(inputs);
+  };
 
-      // 🔹 Screen / container width (mobile friendly)
-      const maxWidth = window.innerWidth * 0.95;
-      const maxHeight = window.innerHeight * 0.7;
+  downloadBtn.onclick = () => {
+    if (!currentImage) {
+      alert("No image to download. Please choose an image first.");
+      return;
+    }
 
-      // 🔹 Original ratio
-      let ratio = image.width / image.height;
+    const file = imageInput.files[0] || btnImageInput.files[0];
+    const fileName = file.name;
+    // --- Create a temp full-resolution canvas ---
+    const exportCanvas = document.createElement("canvas");
+    const exportCtx = exportCanvas.getContext("2d");
 
-      let newWidth = image.width;
-      let newHeight = image.height;
+    exportCanvas.width = currentImage.width;
+    exportCanvas.height = currentImage.height;
 
-      // 🔹 Resize logic (ratio বজায় রেখে)
-      if (newWidth > maxWidth) {
-        newWidth = maxWidth;
-        newHeight = newWidth / ratio;
-      }
+    // --- Grab current filter values ---
+    const ranges = document.querySelectorAll(".range");
+    const tempFilters = Array.from(ranges);
 
-      if (newHeight > maxHeight) {
-        newHeight = maxHeight;
-        newWidth = newHeight * ratio;
-      }
+    // --- Apply filters ---
+    exportCtx.filter = buildFilters(tempFilters);
 
-      // 🔹 Canvas resize
-      canvas.width = newWidth;
-      canvas.height = newHeight;
+    // --- Draw full image at actual resolution ---
+    exportCtx.drawImage(currentImage, 0, 0);
 
-      // 🔹 Clear & draw
-      drawImage();
-    };
+    // --- Create download link ---
+    const link = document.createElement("a");
+    link.download = `edited-${fileName}`;
+    link.href = exportCanvas.toDataURL("image/png");
+    link.click();
   };
 }
 

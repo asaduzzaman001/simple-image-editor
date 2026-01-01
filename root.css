@@ -2,13 +2,13 @@
   /* -----------------------------------
     COLOR SYSTEM
   ----------------------------------- */
-  --color-primary: #334eac;
-  --color-primary-light: #7096d1;
-  --color-primary-dark: #081f5c;
-
+  --color-primary: #3b82f6;
+  --color-primary-light: rgb(191, 216, 255);
+  --color-primary-dark: #004cc5;
+  /* 
   --color-secondary: #e7f1ff;
   --color-secondary-light: #f9fcff;
-  --color-secondary-dark: #d0e3ff;
+  --color-secondary-dark: #d0e3ff; */
 
   --color-bg: #131313;
   --color-bg-alt: #363636b2;

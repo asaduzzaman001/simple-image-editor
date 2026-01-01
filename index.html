@@ -10,12 +10,12 @@
     />
     <link rel="stylesheet" href="root.css" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="media.css" />
   </head>
   <body>
     <main class="container">
       <nav>
-        <div class="logo"></div>
-        <div class="items"></div>
+        <div class="logo"><i class="ri-image-edit-line"></i> Image Editor</div>
       </nav>
       <section class="editor-container">
         <div class="image-area">
@@ -25,7 +25,21 @@
             <input type="file" name="image" id="image-input" accept="image/*" />
           </div>
           <div id="cancel" class="vanish"><i class="ri-close-circle-fill"></i></div>
+          
           <canvas id="image-canvas" class="vanish"></canvas>
+          <div id="btn-container">
+            <button class="btn info-outline" title="Choose Image">
+              <input type="file" name="image" id="btn-image-input" accept="image/*" />
+              <i class="ri-image-add-line"></i> <span>Choose</span>
+            </button>
+            
+            <button id="download-btn" class="btn success-outline" title="Download Image">
+              <i class="ri-download-line"></i> <span>Download</span>
+            </button>
+            <button id="reset-btn" class="btn warning-outline" title="Reset Image">
+             <i class="ri-refresh-line"></i> <span>Reset All</span>
+            </button>
+          </div>
         </div>
         <div class="tools-panel" id="tools-container">
           

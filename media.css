@@ -1,0 +1,55 @@
+@media screen and (max-width: 480px) {
+  nav {
+    padding: var(--space-fluid-md);
+    font-size: var(--font-lg);
+  }
+  .editor-container {
+    flex-direction: column;
+  }
+
+  .image-area {
+    min-width: 100%;
+    flex-direction: column;
+    gap: var(--space-4);
+    height: 55vh;
+    max-height: 55vh;
+    max-width: 100%;
+    padding: 5%;
+  }
+
+  .placeholder {
+    gap: var(--space-10);
+  }
+  .placeholder i {
+    font-size: var(--font-lg);
+  }
+
+  .tools-panel {
+    gap: var(--space-4);
+    overflow-y: auto;
+    height: 35vh;
+  }
+  .info label {
+    font-weight: 600;
+  }
+
+  .tool {
+    gap: var(--space-2);
+  }
+  .tool span {
+    font-size: 12px;
+  }
+
+  .range::-webkit-slider-thumb {
+    width: 15px;
+    height: 15px;
+  }
+
+  canvas {
+    max-width: 98%;
+    max-height: 45vh;
+  }
+  .btn {
+    font-size: var(--font-sm);
+  }
+}
